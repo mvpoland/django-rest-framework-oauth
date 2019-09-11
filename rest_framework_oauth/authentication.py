@@ -150,7 +150,7 @@ class OAuth2Authentication(BaseAuthentication):
             raise exceptions.AuthenticationFailed(msg)
 
         if auth and auth[0].lower() == b'bearer':
-            access_token = auth[1]
+            access_token = auth[1].decode()
         elif 'access_token' in request.POST:
             access_token = request.POST['access_token']
         elif 'access_token' in request.GET and self.allow_query_params_token:

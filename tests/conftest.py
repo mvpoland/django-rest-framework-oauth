@@ -15,13 +15,13 @@ def pytest_configure():
             'django.template.loaders.filesystem.Loader',
             'django.template.loaders.app_directories.Loader',
         ),
-        MIDDLEWARE_CLASSES=(
+        MIDDLEWARE=[
             'django.middleware.common.CommonMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.csrf.CsrfViewMiddleware',
             'django.contrib.auth.middleware.AuthenticationMiddleware',
             'django.contrib.messages.middleware.MessageMiddleware',
-        ),
+        ],
         INSTALLED_APPS=(
             'django.contrib.auth',
             'django.contrib.contenttypes',
@@ -29,12 +29,9 @@ def pytest_configure():
             'django.contrib.sites',
             'django.contrib.messages',
             'django.contrib.staticfiles',
-
             'rest_framework',
-            'oauth_provider',
             'provider',
             'provider.oauth2',
-
             'tests',
         ),
         PASSWORD_HASHERS=(

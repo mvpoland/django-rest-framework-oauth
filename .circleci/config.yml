@@ -1,0 +1,59 @@
+version: 2
+
+
+common: &common
+  working_directory: ~/project
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - v2-deps-{{ .Environment.CIRCLE_JOB }}-{{ checksum "tox.ini" }}
+    - run:
+        name: install dependencies
+        command: pip install --user tox
+    - run:
+        name: run tox
+        command: ~/.local/bin/tox -i $PIP_INDEX_URL
+    - save_cache:
+        paths:
+          - .tox
+          - ~/.cache/pip
+          - ~/.local
+          - ./eggs
+        key: v2-deps-{{ .Environment.CIRCLE_JOB }}-{{ checksum "tox.ini" }}
+
+
+jobs:
+  py27:
+    <<: *common
+    docker:
+      - image: circleci/python:2.7
+        environment:
+          TOXENV=py27-dj111-drf39
+  py35:
+    <<: *common
+    docker:
+      - image: circleci/python:3.5
+        environment:
+          TOXENV=py35-dj111-drf39
+  py36:
+    <<: *common
+    docker:
+      - image: circleci/python:3.6
+        environment:
+          TOXENV=py36-dj111-drf39
+  py37:
+    <<: *common
+    docker:
+      - image: circleci/python:3.7
+        environment:
+          TOXENV=py37-dj111-drf39
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - py27
+      - py35
+      - py36
+      - py37

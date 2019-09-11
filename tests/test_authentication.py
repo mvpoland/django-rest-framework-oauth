@@ -1,12 +1,13 @@
 from __future__ import unicode_literals
+
 import time
 import datetime
+import unittest
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.test import TestCase
-from django.utils import unittest
 from django.utils.http import urlencode
 
 from rest_framework import status
@@ -39,10 +40,9 @@ class OAuth2AuthenticationDebug(OAuth2Authentication):
     allow_query_params_token = True
 
 
-urlpatterns = patterns(
-    '',
-    (r'^oauth/$', MockView.as_view(authentication_classes=[OAuthAuthentication])),
-    (
+urlpatterns = [
+    url(r'^oauth/$', MockView.as_view(authentication_classes=[OAuthAuthentication])),
+    url(
         r'^oauth-with-scope/$',
         MockView.as_view(
             authentication_classes=[OAuthAuthentication],
@@ -50,7 +50,7 @@ urlpatterns = patterns(
         )
     ),
 
-    url(r'^oauth2/', include('provider.oauth2.urls', namespace='oauth2')),
+    url(r'^oauth2/', include('provider.oauth2.urls')),
     url(r'^oauth2-test/$', MockView.as_view(authentication_classes=[OAuth2Authentication])),
     url(r'^oauth2-test-debug/$', MockView.as_view(authentication_classes=[OAuth2AuthenticationDebug])),
     url(
@@ -60,7 +60,7 @@ urlpatterns = patterns(
             permission_classes=[permissions.TokenHasReadWriteScope]
         )
     ),
-)
+]
 
 
 class OAuthTests(TestCase):
@@ -432,7 +432,7 @@ class OAuth2Tests(TestCase):
         auth = self._create_authorization_header()
         response = self.csrf_client.post('/oauth2-test/', HTTP_AUTHORIZATION=auth)
         self.assertIn(response.status_code, (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN))
-        self.assertIn('Invalid token', response.content)
+        self.assertIn(b'Invalid token', response.content)
 
     @unittest.skipUnless(oauth2_provider, 'django-oauth2-provider not installed')
     def test_post_form_with_invalid_scope_failing_auth(self):
