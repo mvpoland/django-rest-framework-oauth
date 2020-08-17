@@ -1,7 +1,6 @@
 *.pyc
 *.db
 *~
-.*
 
 html/
 htmlcov/
@@ -16,5 +15,9 @@ include/
 lib/
 local/
 
-!.gitignore
-!.travis.yml
+.tox
+
+# PyCharm
+.idea
+.idea/*
+*.iml
