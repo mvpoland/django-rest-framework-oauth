@@ -4,12 +4,8 @@ versions of django/python, and compatibility wrappers around optional packages.
 """
 
 # flake8: noqa
-from __future__ import unicode_literals
-import django
 import inspect
 
-from django.utils import six
-from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 

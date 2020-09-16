@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 
 common: &common
@@ -24,36 +24,35 @@ common: &common
 
 
 jobs:
-  py27:
-    <<: *common
-    docker:
-      - image: circleci/python:2.7
-        environment:
-          TOXENV=py27-dj111-drf39
   py35:
     <<: *common
     docker:
       - image: circleci/python:3.5
         environment:
-          TOXENV=py35-dj111-drf39
+          TOXENV=py35-dj20-drf311,py35-dj21-drf311,py35-dj22-drf311
   py36:
     <<: *common
     docker:
       - image: circleci/python:3.6
         environment:
-          TOXENV=py36-dj111-drf39
+          TOXENV=py36-dj20-drf311,py36-dj21-drf311,py36-dj22-drf311
   py37:
     <<: *common
     docker:
       - image: circleci/python:3.7
         environment:
-          TOXENV=py37-dj111-drf39
+          TOXENV=py37-dj20-drf311,py37-dj21-drf311,py37-dj22-drf311
+  py38:
+    <<: *common
+    docker:
+      - image: circleci/python:3.8
+        environment:
+          TOXENV=py38-dj22-drf311
 
 workflows:
-  version: 2
   test:
     jobs:
-      - py27
       - py35
       - py36
       - py37
+      - py38
