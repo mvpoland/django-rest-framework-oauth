@@ -88,9 +88,9 @@ setup(
     package_data=get_package_data(package),
     cmdclass={'test': PyTest},
     install_requires=[
-        "django-oauth2-provider==1.0.0",
+        "django-oauth2-provider==1.0.1",
     ],
-    python_require=">=3.5",
+    python_requires=">=3.5",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
@@ -98,6 +98,8 @@ setup(
         'Framework :: Django :: 2.0',
         'Framework :: Django :: 2.1',
         'Framework :: Django :: 2.2',
+        'Framework :: Django :: 3.0',
+        'Framework :: Django :: 3.1',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
